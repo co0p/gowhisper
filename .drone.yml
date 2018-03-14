@@ -1,7 +1,7 @@
 
 workspace:
   base: /go
-  path: src/github.com/co0p/advertdesk
+  path: src/github.com/co0p/gowhisper
 
 pipeline:
   build:
