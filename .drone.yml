@@ -1,0 +1,11 @@
+
+workspace:
+  base: /go
+  path: src/github.com/co0p/advertdesk
+
+pipeline:
+  build:
+    image: golang
+    commands:
+      - go test ./...
+      - go build cmd/gowhisper/main.go
