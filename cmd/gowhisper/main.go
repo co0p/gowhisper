@@ -23,4 +23,14 @@ func main() {
 		log.Fatalf("%s", err)
 	}
 	log.Printf("loaded %d clients to poll ...", len(clients))
+
+	msg := gowhisper.Message{
+		From:    "f",
+		To:      "t",
+		Subject: "s",
+		Text:    "ttt",
+	}
+
+	notifier := gowhisper.NewMailNotifier(flags.NotifyURL)
+	notifier.Send(msg)
 }
