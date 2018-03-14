@@ -10,7 +10,17 @@ import (
 func main() {
 	flags, err := gowhisper.ParseFlags(os.Args[1:])
 	if err != nil {
-		log.Fatalf("failed startup: %s", err)
+		log.Fatalf("%s", err)
 	}
-	log.Printf("%v", flags)
+
+	in, err := os.Open(flags.ConfigurationFile)
+	if err != nil {
+		log.Fatalf("%s", err)
+	}
+
+	clients, err := gowhisper.ReadClients(in)
+	if err != nil {
+		log.Fatalf("%s", err)
+	}
+	log.Printf("loaded %d clients to poll ...", len(clients))
 }
