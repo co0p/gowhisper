@@ -2,7 +2,10 @@ package main
 
 import (
 	"log"
+	"net"
+	"net/http"
 	"os"
+	"time"
 
 	"github.com/co0p/gowhisper"
 )
@@ -22,15 +25,22 @@ func main() {
 	if err != nil {
 		log.Fatalf("%s", err)
 	}
-	log.Printf("loaded %d clients to poll ...", len(clients))
+	log.Printf("loaded %d clients to check ...", len(clients))
 
-	msg := gowhisper.Message{
-		From:    "f",
-		To:      "t",
-		Subject: "s",
-		Text:    "ttt",
+	client := newHttpClient()
+	notifier := gowhisper.MailNotifier{ApiURL: flags.NotifyURL, Client: client}
+	notifier.Send(gowhisper.Message{})
+}
+
+func newHttpClient() *http.Client {
+	transport := &http.Transport{
+		Dial: (&net.Dialer{
+			Timeout: 5 * time.Second,
+		}).Dial,
+		TLSHandshakeTimeout: 5 * time.Second,
 	}
-
-	notifier := gowhisper.NewMailNotifier(flags.NotifyURL)
-	notifier.Send(msg)
+	return &http.Client{
+		Timeout:   time.Second * 10,
+		Transport: transport,
+	}
 }

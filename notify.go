@@ -5,14 +5,16 @@ import (
 	"errors"
 	"io/ioutil"
 	"mime/multipart"
-	"net"
 	"net/http"
-	"time"
 )
 
+type HttpClient interface {
+	Do(req *http.Request) (*http.Response, error)
+}
+
 type MailNotifier struct {
-	apiURL string
-	client *http.Client
+	ApiURL string
+	Client HttpClient
 }
 
 type Notifier interface {
@@ -24,21 +26,6 @@ type Message struct {
 	To      string
 	Subject string
 	Text    string
-}
-
-func NewMailNotifier(uri string) MailNotifier {
-	transport := &http.Transport{
-		Dial: (&net.Dialer{
-			Timeout: 5 * time.Second,
-		}).Dial,
-		TLSHandshakeTimeout: 5 * time.Second,
-	}
-	client := &http.Client{
-		Timeout:   time.Second * 10,
-		Transport: transport,
-	}
-
-	return MailNotifier{apiURL: uri, client: client}
 }
 
 func (m *MailNotifier) Send(msg Message) error {
@@ -59,9 +46,9 @@ func (m *MailNotifier) Send(msg Message) error {
 
 	w.Close()
 
-	req, err := http.NewRequest("POST", m.apiURL, buf)
+	req, err := http.NewRequest("POST", m.ApiURL, buf)
 	req.Header.Set("Content-Type", w.FormDataContentType())
-	resp, err := m.client.Do(req)
+	resp, err := m.Client.Do(req)
 
 	if err != nil {
 		return err

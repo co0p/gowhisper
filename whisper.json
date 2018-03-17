@@ -3,12 +3,12 @@
         "Label":"advertdesk",
         "URL": "https://advertdesk.herokuapp.com",
         "StatusCode": 200,
-        "Notify": "julian.godesa@googlemail.com"
+        "EmailAddress": "julian.godesa@googlemail.com"
     },
     {
         "Label":"advertdesk-api",
         "URL": "https://advertdesk-api.herokuapp.com/api/healthz",
         "StatusCode": 200,
-        "Notify": "julian.godesa@googlemail.com"
+        "EmailAddress": "julian.godesa@googlemail.com"
     }
 ]
