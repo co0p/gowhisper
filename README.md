@@ -14,7 +14,14 @@ gowhisper needs the following command line arguments:
  * configurationFile string -- path/to/configuration file
  * notifyURL string -- URL to the notification service
  * pollingInterval int -- polling interval in seconds (10 - 360)
-  
+
+
+A call looks like:
+```bash
+./gowhisper -configurationFile whisper.json -notifyURL https://www.mailgun.de/api -pollingInterval 60
+```
+
+
 Here is a sample configuration json:
 ```json
 [
