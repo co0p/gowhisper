@@ -2,8 +2,7 @@ package gowhisper
 
 import (
 	"net/http"
-
-	"github.com/alecthomas/template"
+	"text/template"
 )
 
 type StatusPage struct {
