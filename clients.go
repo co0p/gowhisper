@@ -10,8 +10,8 @@ import (
 type Client struct {
 	Label        string
 	URL          string
-	StatusCode   int
 	EmailAddress string
+	Online       bool
 }
 
 func ReadClients(in io.Reader) ([]Client, error) {
@@ -34,9 +34,6 @@ func validateClientEntry(idx int, client Client) error {
 	}
 	if len(client.URL) < 1 {
 		return errors.New(fmt.Sprintf("client entry #%d is missing URL", idx))
-	}
-	if client.StatusCode < 100 || client.StatusCode > 511 {
-		return errors.New(fmt.Sprintf("client entry #%d has invalid StatusCode", idx))
 	}
 
 	if len(client.EmailAddress) < 1 {

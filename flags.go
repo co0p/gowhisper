@@ -19,8 +19,8 @@ func ParseFlags(args []string) (Flags, error) {
 
 	flag.StringVar(&flags.NotifyURL, "notifyURL", "", "URL to the notification service")
 	flag.StringVar(&flags.ConfigurationFile, "configurationFile", "", "path/to/configuration file")
-	flag.IntVar(&flags.PollingInterval, "pollingInterval", 0, "polling interval in seconds (10 - 360)")
-	flag.IntVar(&flags.Port, "port", 80, "port to serve status page on")
+	flag.IntVar(&flags.PollingInterval, "pollingInterval", 60, "polling interval in seconds (10 - 360)")
+	flag.IntVar(&flags.Port, "port", 8080, "port to serve status page on")
 	flag.CommandLine.Parse(args)
 
 	if flag.NFlag() == 0 {
