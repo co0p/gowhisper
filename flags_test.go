@@ -43,6 +43,16 @@ func Test_ParseFlagsShouldErrOnInvalidPollingIntervalGiven(t *testing.T) {
 	}
 }
 
+func Test_ParseFlagsShouldErrOnInvalidPortGiven(t *testing.T) {
+	ResetForTesting()
+
+	args := []string{"-notifyURL", "http://www.google.de", "-pollingInterval", "100", "-configurationFile", "/tmp", "-port", "0"}
+	_, err := gowhisper.ParseFlags(args)
+	if err == nil {
+		t.Errorf("expected err not to be nil, got '%v'", err)
+	}
+}
+
 func Test_ParseFlagsShouldErrOnInvalidConfigurationFileGiven(t *testing.T) {
 	ResetForTesting()
 
@@ -58,8 +68,9 @@ func Test_ParseFlagsShouldReturnParsedFlags(t *testing.T) {
 	notifyURL := "http://www.google.de"
 	pollingInterval := "10"
 	configurationFile := "README.md"
+	port := "7777"
 
-	args := []string{"-notifyURL", notifyURL, "-pollingInterval", pollingInterval, "-configurationFile", configurationFile}
+	args := []string{"-notifyURL", notifyURL, "-pollingInterval", pollingInterval, "-configurationFile", configurationFile, "-port", port}
 	flags, err := gowhisper.ParseFlags(args)
 	if err != nil {
 		t.Errorf("expected err to be nil, got '%v'", err)
@@ -76,5 +87,10 @@ func Test_ParseFlagsShouldReturnParsedFlags(t *testing.T) {
 	pollingIntervalInt, _ := strconv.Atoi(pollingInterval)
 	if flags.PollingInterval != pollingIntervalInt {
 		t.Errorf("expected PollingInterval to be %v, got '%v'", pollingIntervalInt, flags.PollingInterval)
+	}
+
+	portInt, _ := strconv.Atoi(port)
+	if flags.Port != portInt {
+		t.Errorf("expected Port to be %v, got '%v'", portInt, flags.Port)
 	}
 }

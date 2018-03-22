@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>GoWhisper</title>
+    <link rel="stylesheet" href="https://cdn.rawgit.com/Chalarangelo/mini.css/v2.3.7/dist/mini-default.min.css">
+
+    <style>
+        .success {
+            background-color: MediumSeaGreen
+        }
+
+        .disabled {
+            text-decoration: line-through;
+        }
+    </style>
+</head>
+
+<body>
+    <header class="sticky">
+        <a href="#" class="logo">GoWhisper</a>
+        <span>Status page of co0p services</span>
+        <a href="?refresh=false" id="refreshEnableLink" class="button visible">refresh OFF</a>
+        <a href="?refresh=true" id="refreshDisableLink" class="button">refresh ON</a>
+    </header>
+
+    <main class="container">
+        <div class="col-sm-offset-2">
+            <div class="row">
+
+                <div class="card error">
+                    <div class="section">
+                        <h3>Card Title</h3>
+                        <p>Card content...</p>
+                    </div>
+                </div>
+
+                <div class="card success">
+                    <div class="section">
+                        <h3>Card Title</h3>
+                        <p>Card content...</p>
+                    </div>
+                </div>
+
+                <div class="card warning">
+                    <div class="section">
+                        <h3>Card Title</h3>
+                        <p>Card content...</p>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <div class="section">
+                        <h3>Card Title</h3>
+                        <p>Card content...</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </main>
+
+    <script>
+        var params = (new URL(document.location)).searchParams;
+        var refresh = params.get("refresh");
+        var el = null;
+
+        if (refresh == 'true') {
+            el = document.getElementById('refreshDisableLink');
+            el.classList.toggle('hidden');
+        } else {
+            el = document.getElementById('refreshEnableLink');
+            el.classList.toggle('hidden');
+        }
+        setTimeout(function () {
+            if (refresh == 'true') {
+                window.location.reload();
+            }
+        }, 3000);
+
+    </script>
+</body>
+
+</html>
