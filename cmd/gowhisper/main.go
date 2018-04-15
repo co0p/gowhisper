@@ -27,9 +27,18 @@ func main() {
 		log.Fatalf("failed to parse clients: %s", err)
 	}
 
-	client := newHttpClient()
-	notifier := gowhisper.MailNotifier{ApiURL: flags.NotifyURL, Client: client}
-	notifier.Send(gowhisper.Message{})
+	checker := gowhisper.Checker{
+		HTTPClient:      newHttpClient(),
+		PollingInterval: flags.PollingInterval,
+		Clients:         &clients,
+	}
+	go checker.StartPolling()
+
+	/*
+		client := newHttpClient()
+		notifier := gowhisper.MailNotifier{ApiURL: flags.NotifyURL, Client: client}
+		notifier.Send(gowhisper.Message{Text: "Some text", Subject: "Some subject", To: "julian.godesa@googlemail.com"})
+	*/
 
 	statusPage, err := gowhisper.NewStatusPage(&clients)
 	if err != nil {

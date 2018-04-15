@@ -1,11 +1,16 @@
 [
     {
-        "Label":"advertdesk",
+        "Label": "advertdesk",
         "URL": "https://advertdesk.herokuapp.com",
         "EmailAddress": "julian.godesa@googlemail.com"
     },
     {
-        "Label":"advertdesk-api",
+        "Label": "google",
+        "URL": "https://google.com",
+        "EmailAddress": "julian.godesa@googlemail.com"
+    },
+    {
+        "Label": "advertdesk-api",
         "URL": "https://advertdesk-api.herokuapp.com/api/healthz",
         "EmailAddress": "julian.godesa@googlemail.com"
     }
