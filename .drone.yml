@@ -8,4 +8,23 @@ pipeline:
     image: golang
     commands:
       - go test -cover -v
-      - go build cmd/gowhisper/main.go
+      - go build -o gowhisper cmd/gowhisper/main.go
+  scp:
+    image: appleboy/drone-scp
+    host: co0p.org
+    user: [ ssh_username ]
+    secrets: [ ssh_password ]
+    target: /usr/local/gowhisper/
+    source: 
+     - gowhisper
+     - clients.json
+     - index.html
+  ssh:
+    image: appleboy/drone-ssh
+    host: co0p.org
+    user: [ ssh_username ]
+    secrets: [ ssh_password ]
+    port: 22
+    script:
+     - killall gowhisper
+     - /usr/local/gowhisper/gowhisper -configurationFile clients.json -notifyURL http://www.google.de -port 8888 &
