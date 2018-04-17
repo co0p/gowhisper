@@ -26,5 +26,5 @@ pipeline:
     secrets: [ ssh_password ]
     port: 22
     script:
-     - killall gowhisper
-     - /usr/local/gowhisper/gowhisper -configurationFile clients.json -notifyURL http://www.google.de -port 8888 &
+     - pkill -9 gowhisper
+     - /usr/local/gowhisper/gowhisper -configurationFile /usr/local/gowhisper/clients.json -notifyURL http://www.google.de -port 8888 &
