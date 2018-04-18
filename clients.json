@@ -13,5 +13,10 @@
         "Label": "advertdesk-api",
         "URL": "https://advertdesk-api.herokuapp.com/api/healthz",
         "EmailAddress": "julian.godesa@googlemail.com"
+    },
+    {
+        "Label": "ci.co0p.org",
+        "URL": "http://ci.co0p.org",
+        "EmailAddress": "julian.godesa@googlemail.com"
     }
 ]

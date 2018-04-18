@@ -3,6 +3,7 @@ package gowhisper
 import (
 	"log"
 	"net/http"
+	"sync"
 	"time"
 )
 
@@ -10,6 +11,7 @@ type Checker struct {
 	Clients         *[]Client
 	HTTPClient      *http.Client
 	PollingInterval int
+	mu              sync.Mutex
 }
 
 func (c *Checker) StartPolling() {
@@ -21,19 +23,20 @@ func (c *Checker) StartPolling() {
 		case <-tick:
 			for i, _ := range *c.Clients {
 				i := i // W000t
-				go checkClient(c.HTTPClient, &(*c.Clients)[i])
+				go checkClient(c.mu, c.HTTPClient, &(*c.Clients)[i])
 			}
 		}
 	}
 }
 
-func checkClient(webClient *http.Client, service *Client) {
+func checkClient(mu sync.Mutex, webClient *http.Client, service *Client) {
 	resp, err := webClient.Get(service.URL)
 	if err != nil {
 		log.Printf("failed fetching '%s'", service.URL)
 		return
 	}
 
+	mu.Lock()
 	if resp.StatusCode < 200 || resp.StatusCode > 399 {
 		log.Printf("'%s' is down!", service.URL)
 		service.Online = false
@@ -43,4 +46,5 @@ func checkClient(webClient *http.Client, service *Client) {
 	// still online or recover case
 	log.Printf("'%s' is up!", service.URL)
 	service.Online = true
+	mu.Unlock()
 }
