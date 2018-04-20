@@ -12,6 +12,10 @@ import (
 )
 
 func main() {
+
+	// we want stdout
+	log.SetOutput(os.Stdout)
+
 	flags, err := gowhisper.ParseFlags(os.Args[1:])
 	if err != nil {
 		log.Fatalf("failed to parse flags: %s", err)
