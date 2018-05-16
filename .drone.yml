@@ -28,4 +28,4 @@ pipeline:
     script:
      - pkill -9 gowhisper
      - cd /usr/local/gowhisper
-     - ./gowhisper -configurationFile ./clients.json -port 8888
+     - ./gowhisper -configurationFile ./clients.json -port 8888 > /dev/null &
