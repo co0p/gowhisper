@@ -22,31 +22,24 @@ func (c *Checker) StartPolling() {
 	for {
 		select {
 		case <-tick:
-			for i, _ := range *c.Clients {
-				i := i // W000t
-				go checkClient(c.mu, c.HTTPClient, &(*c.Clients)[i])
+			for clientIdx := range *c.Clients {
+				client := &(*c.Clients)[clientIdx]
+				go c.CheckClient(client)
 			}
 		}
 	}
 }
 
-func checkClient(mu *sync.Mutex, webClient *http.Client, service *Client) {
-	resp, err := webClient.Get(service.URL)
+func (c *Checker) CheckClient(service *Client) {
+	resp, err := c.HTTPClient.Get(service.URL)
 	if err != nil {
 		log.Printf("failed fetching '%s'", service.URL)
 		return
 	}
-	online := false
+	actualState := resp.StatusCode > 199 && resp.StatusCode < 400
 
-	if resp.StatusCode < 200 || resp.StatusCode > 399 {
-		log.Printf("'%s' is down!", service.URL)
-		online = false
-	} else {
-		log.Printf("'%s' is up!", service.URL)
-		online = true
-	}
-
-	mu.Lock()
-	service.Online = online
-	mu.Unlock()
+	c.mu.Lock()
+	service.Online = actualState
+	log.Printf("'%s' is online=%v!", service.URL, service.Online)
+	c.mu.Unlock()
 }

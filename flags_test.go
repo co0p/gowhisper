@@ -23,20 +23,10 @@ func Test_ParseFlagsShouldErrOnMissingFlagsGiven(t *testing.T) {
 	}
 }
 
-func Test_ParseFlagsShouldErrOnInvalidNotifyURLGiven(t *testing.T) {
-	ResetForTesting()
-
-	args := []string{"-notifyURL", "NOT a vaild url", "-pollingInterval", "10", "-configurationFile", "README.md"}
-	_, err := gowhisper.ParseFlags(args)
-	if err == nil {
-		t.Errorf("expected err not to be nil, got '%v'", err)
-	}
-}
-
 func Test_ParseFlagsShouldErrOnInvalidPollingIntervalGiven(t *testing.T) {
 	ResetForTesting()
 
-	args := []string{"-notifyURL", "http://www.google.de", "-pollingInterval", "0", "-configurationFile", "/tmp"}
+	args := []string{"-pollingInterval", "0", "-configurationFile", "/tmp"}
 	_, err := gowhisper.ParseFlags(args)
 	if err == nil {
 		t.Errorf("expected err not to be nil, got '%v'", err)
@@ -46,7 +36,7 @@ func Test_ParseFlagsShouldErrOnInvalidPollingIntervalGiven(t *testing.T) {
 func Test_ParseFlagsShouldErrOnInvalidPortGiven(t *testing.T) {
 	ResetForTesting()
 
-	args := []string{"-notifyURL", "http://www.google.de", "-pollingInterval", "100", "-configurationFile", "/tmp", "-port", "0"}
+	args := []string{"-pollingInterval", "100", "-configurationFile", "/tmp", "-port", "0"}
 	_, err := gowhisper.ParseFlags(args)
 	if err == nil {
 		t.Errorf("expected err not to be nil, got '%v'", err)
@@ -56,7 +46,7 @@ func Test_ParseFlagsShouldErrOnInvalidPortGiven(t *testing.T) {
 func Test_ParseFlagsShouldErrOnInvalidConfigurationFileGiven(t *testing.T) {
 	ResetForTesting()
 
-	args := []string{"-notifyURL", "http://www.google.de", "-pollingInterval", "60", "-configurationFile", " does not exist"}
+	args := []string{"-pollingInterval", "60", "-configurationFile", " does not exist"}
 	_, err := gowhisper.ParseFlags(args)
 	if err == nil {
 		t.Errorf("expected err not to be nil, got '%v'", err)
@@ -65,19 +55,14 @@ func Test_ParseFlagsShouldErrOnInvalidConfigurationFileGiven(t *testing.T) {
 
 func Test_ParseFlagsShouldReturnParsedFlags(t *testing.T) {
 	ResetForTesting()
-	notifyURL := "http://www.google.de"
 	pollingInterval := "10"
 	configurationFile := "README.md"
 	port := "7777"
 
-	args := []string{"-notifyURL", notifyURL, "-pollingInterval", pollingInterval, "-configurationFile", configurationFile, "-port", port}
+	args := []string{"-pollingInterval", pollingInterval, "-configurationFile", configurationFile, "-port", port}
 	flags, err := gowhisper.ParseFlags(args)
 	if err != nil {
 		t.Errorf("expected err to be nil, got '%v'", err)
-	}
-
-	if flags.NotifyURL != notifyURL {
-		t.Errorf("expected NotifyURL to be %v, got '%v'", notifyURL, flags.NotifyURL)
 	}
 
 	if flags.ConfigurationFile != configurationFile {

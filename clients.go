@@ -8,10 +8,9 @@ import (
 )
 
 type Client struct {
-	Label        string
-	URL          string
-	EmailAddress string
-	Online       bool
+	Label  string
+	URL    string
+	Online bool
 }
 
 func ReadClients(in io.Reader) ([]Client, error) {
@@ -34,10 +33,6 @@ func validateClientEntry(idx int, client Client) error {
 	}
 	if len(client.URL) < 1 {
 		return errors.New(fmt.Sprintf("client entry #%d is missing URL", idx))
-	}
-
-	if len(client.EmailAddress) < 1 {
-		return errors.New(fmt.Sprintf("client entry #%d is missing EmailAddress", idx))
 	}
 
 	return nil

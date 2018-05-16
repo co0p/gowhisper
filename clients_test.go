@@ -20,11 +20,10 @@ func Test_ReadClientsShouldThrowErrorOnInvalidJSON(t *testing.T) {
 }
 
 func Test_ReadClientsShouldReturnClientsFromJSON(t *testing.T) {
-	var json = `[{"Label":"%s", "URL": "%s", "EmailAddress": "%s"}]`
+	var json = `[{"Label":"%s", "URL": "%s"}]`
 	expLabel := "LAbel"
 	expURL := "a url"
-	expEmailAddress := "notify me"
-	input := fmt.Sprintf(json, expLabel, expURL, expEmailAddress)
+	input := fmt.Sprintf(json, expLabel, expURL)
 
 	in := strings.NewReader(input)
 	clients, err := gowhisper.ReadClients(in)
@@ -40,13 +39,10 @@ func Test_ReadClientsShouldReturnClientsFromJSON(t *testing.T) {
 	if client.URL != expURL {
 		t.Errorf("expected URL to be %s, got %s", expURL, client.URL)
 	}
-	if client.EmailAddress != expEmailAddress {
-		t.Errorf("expected EmailAddress to be %s, got %s", expEmailAddress, client.EmailAddress)
-	}
 }
 
 func Test_ReadClientsShouldReturnErrorOnLabelMissing(t *testing.T) {
-	var json = `[{"Label":"", "URL": "string", "EmailAddress": "string"}]`
+	var json = `[{"Label":"", "URL": "string"}]`
 
 	in := strings.NewReader(json)
 	_, err := gowhisper.ReadClients(in)
@@ -72,22 +68,6 @@ func Test_ReadClientsShouldReturnErrorOnURLMissing(t *testing.T) {
 	}
 
 	hint := "URL"
-	if !strings.Contains(err.Error(), "") {
-		t.Errorf("expected error message to contain hint about '%s', got '%s'", hint, err.Error())
-	}
-}
-
-func Test_ReadClientsShouldReturnErrorOnEmailAddressMissing(t *testing.T) {
-	var json = `[{"Label":"string", "URL": "string",  "EmailAddress": ""}]`
-
-	in := strings.NewReader(json)
-	_, err := gowhisper.ReadClients(in)
-
-	if err == nil {
-		t.Errorf("expected err not to be nil")
-	}
-
-	hint := "EmailAddress"
 	if !strings.Contains(err.Error(), "") {
 		t.Errorf("expected error message to contain hint about '%s', got '%s'", hint, err.Error())
 	}

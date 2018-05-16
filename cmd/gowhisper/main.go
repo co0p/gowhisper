@@ -32,32 +32,26 @@ func main() {
 	}
 
 	checker := gowhisper.Checker{
-		HTTPClient:      newHttpClient(),
+		HTTPClient:      newHTTPClient(),
 		PollingInterval: flags.PollingInterval,
 		Clients:         &clients,
 	}
 	go checker.StartPolling()
-
-	/*
-		client := newHttpClient()
-		notifier := gowhisper.MailNotifier{ApiURL: flags.NotifyURL, Client: client}
-		notifier.Send(gowhisper.Message{Text: "Some text", Subject: "Some subject", To: "julian.godesa@googlemail.com"})
-	*/
 
 	statusPage, err := gowhisper.NewStatusPage(&clients)
 	if err != nil {
 		log.Fatalf("failed to initialize status page: %s", err)
 	}
 
-	portStr := fmt.Sprintf(":%d", flags.Port)
-	log.Printf("starting status page on port " + portStr)
+	log.Printf("starting status page on port '%d' ", flags.Port)
 	http.HandleFunc("/", statusPage.ServeHTTP)
+	portStr := fmt.Sprintf(":%d", flags.Port)
 	if err := http.ListenAndServe(portStr, nil); err != nil {
 		log.Fatalf("failed to start statuspage listener: %s", err)
 	}
 }
 
-func newHttpClient() *http.Client {
+func newHTTPClient() *http.Client {
 	transport := &http.Transport{
 		Dial: (&net.Dialer{
 			Timeout: 5 * time.Second,

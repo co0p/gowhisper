@@ -11,9 +11,9 @@ type StatusPage struct {
 }
 
 type StatusEntry struct {
-	Label       string
-	Description string
-	Online      bool
+	Label  string
+	URL    string
+	Online bool
 }
 
 func NewStatusPage(clients *[]Client) (StatusPage, error) {
@@ -24,7 +24,7 @@ func NewStatusPage(clients *[]Client) (StatusPage, error) {
 func (s *StatusPage) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 	entries := []StatusEntry{}
 	for _, v := range *s.clients {
-		e := StatusEntry{Label: v.Label, Online: v.Online}
+		e := StatusEntry{Label: v.Label, URL: v.URL, Online: v.Online}
 		entries = append(entries, e)
 	}
 
