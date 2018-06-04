@@ -7,7 +7,6 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>GoWhisper</title>
     <link rel="stylesheet" href="https://cdn.rawgit.com/Chalarangelo/mini.css/v2.3.7/dist/mini-default.min.css">
-
     <style>
         .success {
             background-color: MediumSeaGreen
@@ -37,9 +36,11 @@
 
                 {{range .Entries}}
 
-                <a class="card {{if .Online}} success {{else}} error {{end}} no-decoration"  target="_blank" href="{{.URL}}">
+                <a class="card {{if .Online}} success {{else}} error {{end}} no-decoration" target="_blank" href="{{.URL}}">
                     <div class="section">
-                        <center><h3>{{.Label}}</h3></center>
+                        <center>
+                            <h3>{{.Label}}</h3>
+                        </center>
                     </div>
                 </a>
                 {{end}}

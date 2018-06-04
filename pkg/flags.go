@@ -6,6 +6,7 @@ import (
 	"os"
 )
 
+// Flags contains the passed in settings via flags
 type Flags struct {
 	NotifyURL         string
 	PollingInterval   int

@@ -4,7 +4,7 @@ import (
 	"net/http"
 	"testing"
 
-	"github.com/co0p/gowhisper"
+	"github.com/co0p/gowhisper/pkg"
 )
 
 func Test_checker_CheckService_ShouldSetServiceToOffline_WhenServiceIsOffline(t *testing.T) {

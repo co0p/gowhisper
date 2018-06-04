@@ -8,7 +8,7 @@ import (
 	"os"
 	"time"
 
-	"github.com/co0p/gowhisper"
+	"github.com/co0p/gowhisper/pkg"
 )
 
 func main() {
@@ -21,12 +21,12 @@ func main() {
 		log.Fatalf("failed to parse flags: %s", err)
 	}
 
-	in, err := os.Open(flags.ConfigurationFile)
+	cfgFile, err := os.Open(flags.ConfigurationFile)
 	if err != nil {
 		log.Fatalf("failed to read clients: %s", err)
 	}
 
-	clients, err := gowhisper.ReadClients(in)
+	clients, err := gowhisper.ReadClients(cfgFile)
 	if err != nil {
 		log.Fatalf("failed to parse clients: %s", err)
 	}
@@ -51,6 +51,7 @@ func main() {
 	}
 }
 
+// newHTTPClient returns a configured http client with timeouts configured
 func newHTTPClient() *http.Client {
 	transport := &http.Transport{
 		Dial: (&net.Dialer{

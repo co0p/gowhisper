@@ -6,14 +6,14 @@ import (
 	"strconv"
 	"testing"
 
-	"github.com/co0p/gowhisper"
+	"github.com/co0p/gowhisper/pkg"
 )
 
 func ResetForTesting() {
 	flag.CommandLine = flag.NewFlagSet(os.Args[0], flag.ContinueOnError)
 }
 
-func Test_ParseFlagsShouldErrOnMissingFlagsGiven(t *testing.T) {
+func Test_ParseFlags_Should_ErrOnMissingFlagsGiven(t *testing.T) {
 	ResetForTesting()
 	args := []string{""}
 
@@ -23,7 +23,7 @@ func Test_ParseFlagsShouldErrOnMissingFlagsGiven(t *testing.T) {
 	}
 }
 
-func Test_ParseFlagsShouldErrOnInvalidPollingIntervalGiven(t *testing.T) {
+func Test_ParseFlags_Should_ErrOnInvalidPollingIntervalGiven(t *testing.T) {
 	ResetForTesting()
 
 	args := []string{"-pollingInterval", "0", "-configurationFile", "/tmp"}
@@ -33,7 +33,7 @@ func Test_ParseFlagsShouldErrOnInvalidPollingIntervalGiven(t *testing.T) {
 	}
 }
 
-func Test_ParseFlagsShouldErrOnInvalidPortGiven(t *testing.T) {
+func Test_ParseFlags_Should_ErrOnInvalidPortGiven(t *testing.T) {
 	ResetForTesting()
 
 	args := []string{"-pollingInterval", "100", "-configurationFile", "/tmp", "-port", "0"}
@@ -43,7 +43,7 @@ func Test_ParseFlagsShouldErrOnInvalidPortGiven(t *testing.T) {
 	}
 }
 
-func Test_ParseFlagsShouldErrOnInvalidConfigurationFileGiven(t *testing.T) {
+func Test_ParseFlags_Should_ErrOnInvalidConfigurationFileGiven(t *testing.T) {
 	ResetForTesting()
 
 	args := []string{"-pollingInterval", "60", "-configurationFile", " does not exist"}
@@ -53,10 +53,10 @@ func Test_ParseFlagsShouldErrOnInvalidConfigurationFileGiven(t *testing.T) {
 	}
 }
 
-func Test_ParseFlagsShouldReturnParsedFlags(t *testing.T) {
+func Test_ParseFlags_Should_ReturnParsedFlags(t *testing.T) {
 	ResetForTesting()
 	pollingInterval := "10"
-	configurationFile := "README.md"
+	configurationFile := "../clients.json"
 	port := "7777"
 
 	args := []string{"-pollingInterval", pollingInterval, "-configurationFile", configurationFile, "-port", port}

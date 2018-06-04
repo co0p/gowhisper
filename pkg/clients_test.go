@@ -5,7 +5,7 @@ import (
 	"strings"
 	"testing"
 
-	"github.com/co0p/gowhisper"
+	"github.com/co0p/gowhisper/pkg"
 )
 
 func Test_ReadClientsShouldThrowErrorOnInvalidJSON(t *testing.T) {
@@ -19,7 +19,7 @@ func Test_ReadClientsShouldThrowErrorOnInvalidJSON(t *testing.T) {
 	}
 }
 
-func Test_ReadClientsShouldReturnClientsFromJSON(t *testing.T) {
+func Test_ReadClients_ShouldReturn_ClientsFromJSON(t *testing.T) {
 	var json = `[{"Label":"%s", "URL": "%s"}]`
 	expLabel := "LAbel"
 	expURL := "a url"
@@ -41,7 +41,7 @@ func Test_ReadClientsShouldReturnClientsFromJSON(t *testing.T) {
 	}
 }
 
-func Test_ReadClientsShouldReturnErrorOnLabelMissing(t *testing.T) {
+func Test_ReadClients_ShouldReturn_ErrorOnLabelMissing(t *testing.T) {
 	var json = `[{"Label":"", "URL": "string"}]`
 
 	in := strings.NewReader(json)
@@ -57,7 +57,7 @@ func Test_ReadClientsShouldReturnErrorOnLabelMissing(t *testing.T) {
 	}
 }
 
-func Test_ReadClientsShouldReturnErrorOnURLMissing(t *testing.T) {
+func Test_ReadClients_ShouldReturn_ErrorOnURLMissing(t *testing.T) {
 	var json = `[{"Label":"string", "URL": "", "EmailAddress": "string"}]`
 
 	in := strings.NewReader(json)
