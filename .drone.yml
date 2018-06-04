@@ -7,7 +7,7 @@ pipeline:
   build:
     image: golang
     commands:
-      - go test -cover -v
+      - go test ./... -cover -v
       - go build -o gowhisper cmd/gowhisper/main.go
   scp:
     image: appleboy/drone-scp
