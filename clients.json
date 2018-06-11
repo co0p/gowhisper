@@ -1,7 +1,7 @@
 [
     {
         "Label": "advertdesk",
-        "URL": "https://advertdesk.herokuapp.com"
+        "URL": "http://advertdesk.co0p.org"
     },
     {
         "Label": "google",
@@ -9,7 +9,7 @@
     },
     {
         "Label": "advertdesk-api",
-        "URL": "https://advertdesk-api.herokuapp.com/api/healthz"
+        "URL": "http://advertdesk-api.co0p.org/api/healthz"
     },
     {
         "Label": "ci.co0p.org",
