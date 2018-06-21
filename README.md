@@ -15,12 +15,13 @@ gowhisper uses the following command line arguments:
  * pollingInterval int -- polling interval in seconds (10 - 360) (default: 60)
  * port int -- the port to serve the ui to (default: 8080)
 
-
 A call looks like:
 ```bash
 ./gowhisper -configurationFile whisper.json -pollingInterval 60 -port 8000
 ```
 
+Configuration
+-------------
 
 Here is a sample configuration json:
 ```json
