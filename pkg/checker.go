@@ -32,11 +32,12 @@ func (c *Checker) StartPolling() {
 
 func (c *Checker) CheckClient(service *Client) {
 	resp, err := c.HTTPClient.Get(service.URL)
+	actualState := false
 	if err != nil {
 		log.Printf("failed fetching '%s'", service.URL)
-		return
+	} else {
+		actualState = resp.StatusCode > 199 && resp.StatusCode < 400
 	}
-	actualState := resp.StatusCode > 199 && resp.StatusCode < 400
 
 	c.mu.Lock()
 	service.Online = actualState
