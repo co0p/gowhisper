@@ -2,7 +2,7 @@ gowhisper
 =========
 
 [![Drone build status](http://ci.co0p.org/api/badges/co0p/gowhisper/status.svg)](http://ci.co0p.org/co0p/gowhisper)
-
+[![Go Report Card](https://goreportcard.com/badge/github.com/co0p/gowhisper)](https://goreportcard.com/report/github.com/co0p/gowhisper)
 
 A dead simple website / service status checker for http status; nice ui included.
 
